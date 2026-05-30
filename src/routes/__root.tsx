@@ -1,28 +1,54 @@
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import {
+  HeadContent,
+  Link,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from "@tanstack/react-router";
+import { Navbar } from "../components/layout/Navbar";
+// import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+// import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import '../styles.css'
 
 export const Route = createRootRoute({
-  component: RootComponent,
-})
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Agiliza — A Solução para o Trabalho Informal" },
+    ],
+    links: [
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap",
+      },
+    ],
+  }),
+  shellComponent: RootDocument,
+});
 
-function RootComponent() {
+
+function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Outlet />
-      <TanStackDevtools
-        config={{
-          position: 'bottom-right',
-        }}
-        plugins={[
-          {
-            name: 'TanStack Router',
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-        ]}
-      />
-    </>
-  )
+    <html lang="pt">
+      <head>
+        <HeadContent />
+      </head>
+      <body className="bg-black text-white antialiased">
+        <Navbar />
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
 }
